@@ -1,0 +1,2 @@
+WIN_SIZE = (1024, 840)
+AXES_COLOR = (0, 0, 0)
