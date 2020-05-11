@@ -27,7 +27,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../../Desktop/GitHub/GeomPY/PYPY.jpg</pixmap>
+     <pixmap>PYPY.jpg</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
