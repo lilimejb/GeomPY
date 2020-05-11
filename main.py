@@ -18,11 +18,21 @@ class Triangle_coords():
         self.ar = None
         self.error = False
         self.error2 = False
+        self.a_med = None
+        self.b_med = None
+        self.c_med = None
+        self.a_hei = None
+        self.b_hei = None
+        self.c_hei = None
+        self.a_bis = None
+        self.b_bis = None
+        self.c_bis = None
+        self.poluper = None
         
     
-    
     def perimetr(self):
-        self.per = self.ab + self.bc + self.ac
+        self.per = round(self.ab + self.bc + self.ac, 1)
+        self.poluper = self.per / 2
     
 
     def ab_counter(self):
@@ -56,7 +66,24 @@ class Triangle_coords():
 
     def area(self):
         self.ar = round(self.ab * self.ac * math.sin(math.radians(self.alpha)) / 2, 1)
-
+    
+    def medi(self):
+        self.b_med = round(math.sqrt(((2 * (self.ab ** 2)) + (2 * (self.bc ** 2)) - (self.ac ** 2)) / 4), 1)
+        self.a_med = round(math.sqrt((2 * (self.ab ** 2) + (2 * (self.ac ** 2)) - (self.bc ** 2)) / 4), 1)
+        self.c_med = round(math.sqrt((2 * (self.bc ** 2) + (2 * (self.ac ** 2)) - (self.ab ** 2)) / 4), 1)
+    
+    def heig(self):
+        self.a_hei = round(2 * math.sqrt(self.poluper * (self.poluper - self.bc) * (self.poluper - self.ac) * (
+               self.poluper - self.ab)) / self.bc, 1)
+        self.b_hei = round(2 * math.sqrt(self.poluper * (self.poluper - self.bc) * (self.poluper - self.ac) * (
+               self.poluper - self.ab)) / self.ac, 1)
+        self.c_hei = round(2 * math.sqrt(self.poluper * (self.poluper - self.bc) * (self.poluper - self.ac) * (
+               self.poluper - self.ab)) / self.ab, 1)
+    
+    def biss(self):
+        self.a_bis = round(2 * math.sqrt(self.bc * self.ac * self.poluper * (self.poluper - self.ab)) / (self.bc + self.ac), 1)
+        self.b_bis = round(2 * math.sqrt(self.ab * self.ac * self.poluper * (self.poluper - self.bc)) / (self.ab + self.ac), 1)
+        self.c_bis = round(2 * math.sqrt(self.bc * self.ab * self.poluper * (self.poluper - self.ac)) / (self.bc + self.ab), 1)
 
     def count(self):
         if self.error2:
@@ -77,6 +104,9 @@ class Triangle_coords():
                     else:
                         self.perimetr()
                         self.area()
+                        self.biss()
+                        self.medi()
+                        self.heig()
                         self.picture('test.jpg', 500, 500)
                 else:
                     self.error = True
@@ -87,25 +117,24 @@ class Triangle_coords():
         drawer = ImageDraw.Draw(im)
 
         drawer.rectangle(((0, 0), (width, height)), background_color)
-        
-        
         ax, ay = self.a
         bx, by = self.b
         cx, cy = self.c
-        ax = ax % 8 + 1
-        ay = ay % 8 + 1
-        bx = bx % 8 + 1
-        by = by % 8 + 1
-        cx = cx % 8 + 1
-        cy = cy % 8 + 1
-        self.counter = ax // 8 + 1
-        drawer.polygon([(width // 4 + ax * width // 10, height // 2 + int(-1 * (ay * width // 10))),
-                        (width // 4 + bx * width // 10, height // 2 + int(-1 * (by * width // 10))),
-                        (width // 4 + cx * width // 10, height // 2 + int(-1 * (cy * width // 10)))], triangle_color)
+        delx = max([ax, bx, cx]) - min([ax, bx, cx])
+        dely = max([ay, by, cy]) - min([ay, by, cy])
+        ax = ax / max([delx, dely]) * 4
+        ay = ay / max([delx, dely]) * 4
+        bx = bx / max([delx, dely]) * 4
+        by = by / max([delx, dely]) * 4
+        cx = cx / max([delx, dely]) * 4
+        cy = cy / max([delx, dely]) * 4
+        drawer.polygon([(width // 2 + ax * width // 10, height // 2 + int(-1 * (ay * width // 10))),
+                        (width // 2 + bx * width // 10, height // 2 + int(-1 * (by * width // 10))),
+                        (width // 2 + cx * width // 10, height // 2 + int(-1 * (cy * width // 10)))], triangle_color)
 
-        drawer.line((width // 2, 0, width // 2, height), fill=(0, 0, 0), width=5)
-        drawer.line((0, height // 2, width, height // 2), fill=(0, 0, 0), width=5)
-        drawer.line((width // 2 + 2, 0, width // 2 + 5, 5), fill=(0, 0, 0), width=10)
+        # drawer.line((width // 2, 0, width // 2, height), fill=(0, 0, 0), width=5)
+        # drawer.line((0, height // 2, width, height // 2), fill=(0, 0, 0), width=5)
+        # drawer.line((width // 2 + 2, 0, width // 2 + 5, 5), fill=(0, 0, 0), width=10)
         im.save(file_name)
 
     
@@ -113,12 +142,23 @@ class Triangle_elems():
     def __init__(self, a='a', b='b', c='c', 
                        ab = None, bc = None, ac = None,
                        alpha = None, beta = None, gamma = None):
+
         self.ab_name = a.upper() + b.upper()
         self.ac_name = a.upper() + c.upper()
         self.bc_name = b.upper() + c.upper()
         self.alpha_name = '∠' + b.upper() + a.upper() + c.upper()
         self.beta_name = '∠' + a.upper() + b.upper() + c.upper()
         self.gamma_name = '∠' + b.upper() + c.upper() + a.upper()
+        self.a_med_name = a.upper() + 'M1'
+        self.b_med_name = b.upper() + 'M2'
+        self.c_med_name = c.upper() + 'M3'
+        self.a_hei_name = a.upper() + 'H1'
+        self.b_hei_name = b.upper() + 'H2'
+        self.c_hei_name = c.upper() + 'H3'
+        self.a_bis_name = a.upper() + 'B1'
+        self.b_bis_name = b.upper() + 'B2'
+        self.c_bis_name = c.upper() + 'B3'
+
         self.between = False
         self.near = False
         self.side_between = False
@@ -133,6 +173,19 @@ class Triangle_elems():
         self.error = False 
         self.error2 = False
         self.error3 = False
+        self.a_med = None
+        self.b_med = None
+        self.c_med = None
+        self.a_hei = None
+        self.b_hei = None
+        self.c_hei = None
+        self.a_bis = None
+        self.b_bis = None
+        self.c_bis = None
+        self.per = None
+        self.ar = None
+        self.poluper = None
+        
 
         if ab != None and bc != None and ac != None:
             self.ab = ab
@@ -365,6 +418,13 @@ class Triangle_elems():
             if (self.alpha + self.beta + self.gamma != 180) or self.alpha <= 0 or self.beta <= 0 or self.gamma <= 0:
                 self.error2 = True
         
+    def perimetr(self):
+        self.per = round(self.ab + self.bc + self.ac, 1)
+        self.poluper = self.per / 2
+    
+    def area(self):
+        self.ar = round(self.a_hei * self.bc / 2, 1)
+        
     def side_between_func(self, alpha, beta, ab):
         if alpha == 0 or beta == 0:
             self.error2 = True
@@ -427,14 +487,23 @@ class Triangle_elems():
         if (self.alpha + self.beta + self.gamma != 180) or self.alpha <= 0 or self.beta <= 0 or self.gamma <= 0:
             self.error2 = True
     
-    def median_couter(self):
-        pass
+    def medi(self):
+        self.b_med = round(math.sqrt(((2 * (self.ab ** 2)) + (2 * (self.bc ** 2)) - (self.ac ** 2)) / 4), 1)
+        self.a_med = round(math.sqrt((2 * (self.ab ** 2) + (2 * (self.ac ** 2)) - (self.bc ** 2)) / 4), 1)
+        self.c_med = round(math.sqrt((2 * (self.bc ** 2) + (2 * (self.ac ** 2)) - (self.ab ** 2)) / 4), 1)
     
-    def vertical_counter(self):
-        pass
-
-    def bisector(self):
-        pass
+    def heig(self):
+        self.a_hei = round(2 * math.sqrt(self.poluper * (self.poluper - self.bc) * (self.poluper - self.ac) * (
+               self.poluper - self.ab)) / self.bc, 1)
+        self.b_hei = round(2 * math.sqrt(self.poluper * (self.poluper - self.bc) * (self.poluper - self.ac) * (
+               self.poluper - self.ab)) / self.ac, 1)
+        self.c_hei = round(2 * math.sqrt(self.poluper * (self.poluper - self.bc) * (self.poluper - self.ac) * (
+               self.poluper - self.ab)) / self.ab, 1)
+    
+    def biss(self):
+        self.a_bis = round(2 * math.sqrt(self.bc * self.ac * self.poluper * (self.poluper - self.ab)) / (self.bc + self.ac), 1)
+        self.b_bis = round(2 * math.sqrt(self.ab * self.ac * self.poluper * (self.poluper - self.bc)) / (self.ab + self.ac), 1)
+        self.c_bis = round(2 * math.sqrt(self.bc * self.ab * self.poluper * (self.poluper - self.ac)) / (self.bc + self.ab), 1)
 
     def picture(self, file_name, width, height, background_color='#ffffff', triangle_color='#bF311A',):
         im = Image.new("RGB", (width, height))
@@ -443,20 +512,20 @@ class Triangle_elems():
         drawer.rectangle(((0, 0), (width, height)), background_color)
 
         rightangle_alpha = self.gamma
+        ac = self.ac / max([self.ac, self.bc, self.ab])
+        bc = self.ab / max([self.ac, self.bc, self.ab])
         bx = self.bc * math.cos(math.radians(rightangle_alpha))
         ox = bx 
         rightangle_beta = math.degrees(math.asin(ox / self.bc))
-        bc = self.bc % 8 + 1
-        ac = self.ac % 8 + 1
-        self.counter = int((self.bc // 8) + 1)
+        
         # print(self.bc * math.cos(math.radians(self.gamma)))
         # print(rightangle_beta)
         # print(self.bc * math.cos(math.radians(rightangle_beta)))
 
-        drawer.polygon([((width // 16), (height - 100)),
-                        ((width // 16 + ac * (width // 10)), (height - 100)),
-                        ((width // 16 + bc * math.cos(math.radians(rightangle_alpha)) * (width // 10)), 
-                        (height - 100 - bc * math.cos(math.radians(rightangle_beta)) * (width // 10)))], 
+        drawer.polygon([((width // 4), (height - 100)),
+                        ((width // 4 + ac * (width // 5)), (height - 100)),
+                        ((width // 4 + bc * math.cos(math.radians(rightangle_alpha)) * (width // 5)), 
+                        (height - 100 - bc * math.cos(math.radians(rightangle_beta)) * (width // 5)))], 
                         triangle_color)
         im.save(file_name)
         
@@ -518,6 +587,11 @@ class Triangle_elems():
                             self.side_away_func(self.gamma, self.alpha, self.bc)
                         elif self.bc_bool:
                             self.side_away_func(self.alpha, self.beta, self.ab)
+                self.perimetr()
+                self.medi()
+                self.heig()
+                self.biss()
+                self.area()
                     
                 
 

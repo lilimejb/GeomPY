@@ -7,7 +7,6 @@ from config import *
 from main import *
 
 
-
 class Hello_window(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -135,7 +134,17 @@ class Sincos_second(QWidget):
         {tangle.beta_name} = {tangle.beta}
         {tangle.alpha_name} = {tangle.alpha}
         {tangle.gamma_name} = {tangle.gamma}
-        Масштаб 1:{tangle.counter}''')
+        Медиана {tangle.a_med_name} = {tangle.a_med}
+        Медиана {tangle.b_med_name} = {tangle.b_med}
+        Медиана {tangle.c_med_name} = {tangle.c_med}
+        Высота {tangle.a_hei_name} = {tangle.a_hei}
+        Высота {tangle.b_hei_name} = {tangle.b_hei}
+        Высота {tangle.c_hei_name} = {tangle.c_hei}
+        Биссектриса {tangle.a_bis_name} = {tangle.a_bis}
+        Биссектриса {tangle.b_bis_name} = {tangle.b_bis}
+        Биссектриса {tangle.c_bis_name} = {tangle.c_bis}
+        Периметр = {tangle.per}
+        Площадь = {tangle.ar}''')
 
                     self.image.setPixmap(pixmap)
                     self.image.setScaledContents(True)
@@ -219,7 +228,15 @@ class SecondForm_for_coords(QWidget):
     ∠BCA = {tangle.gamma}
     Периметр = {tangle.per}
     Площадь = {tangle.ar}
-    Масштаб 1:{tangle.counter}''')
+    Медиана из проведённая из точки А = {tangle.a_med}
+    Медиана из проведённая из точки B = {tangle.b_med}
+    Медиана из проведённая из точки C = {tangle.c_med}
+    Высота проведённая из точки A = {tangle.a_hei}
+    Высота проведённая из точки B = {tangle.b_hei}
+    Высота проведённая из точки C = {tangle.c_hei}
+    Биссектриса проведённая из точки A = {tangle.a_bis}
+    Биссектриса проведённая из точки B = {tangle.b_bis}
+    Биссектриса проведённая из точки C = {tangle.c_bis} ''')
                 self.image.setPixmap(pixmap)
 
 
