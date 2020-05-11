@@ -228,15 +228,15 @@ class SecondForm_for_coords(QWidget):
     ∠BCA = {tangle.gamma}
     Периметр = {tangle.per}
     Площадь = {tangle.ar}
-    Медиана из проведённая из точки А = {tangle.a_med}
-    Медиана из проведённая из точки B = {tangle.b_med}
-    Медиана из проведённая из точки C = {tangle.c_med}
-    Высота проведённая из точки A = {tangle.a_hei}
-    Высота проведённая из точки B = {tangle.b_hei}
-    Высота проведённая из точки C = {tangle.c_hei}
-    Биссектриса проведённая из точки A = {tangle.a_bis}
-    Биссектриса проведённая из точки B = {tangle.b_bis}
-    Биссектриса проведённая из точки C = {tangle.c_bis} ''')
+    Медиана, проведённая из точки А = {tangle.a_med}
+    Медиана, проведённая из точки B = {tangle.b_med}
+    Медиана, проведённая из точки C = {tangle.c_med}
+    Высота, проведённая из точки A = {tangle.a_hei}
+    Высота, проведённая из точки B = {tangle.b_hei}
+    Высота, проведённая из точки C = {tangle.c_hei}
+    Биссектриса, проведённая из точки A = {tangle.a_bis}
+    Биссектриса, проведённая из точки B = {tangle.b_bis}
+    Биссектриса, проведённая из точки C = {tangle.c_bis} ''')
                 self.image.setPixmap(pixmap)
 
 

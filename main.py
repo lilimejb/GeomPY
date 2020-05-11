@@ -99,7 +99,7 @@ class Triangle_coords():
                     self.alpha_counter()
                     self.beta_counter()
                     self.gamma_counter()
-                    if self.alpha + self.beta + self.gamma != 180:
+                    if (self.alpha + self.beta + self.gamma != 180) or (self.alpha <= 0 or self.beta <= 0 or self.gamma <= 0):
                         self.error = True
                     else:
                         self.perimetr()
@@ -149,15 +149,15 @@ class Triangle_elems():
         self.alpha_name = '∠' + b.upper() + a.upper() + c.upper()
         self.beta_name = '∠' + a.upper() + b.upper() + c.upper()
         self.gamma_name = '∠' + b.upper() + c.upper() + a.upper()
-        self.a_med_name = a.upper() + 'M1'
-        self.b_med_name = b.upper() + 'M2'
-        self.c_med_name = c.upper() + 'M3'
-        self.a_hei_name = a.upper() + 'H1'
-        self.b_hei_name = b.upper() + 'H2'
-        self.c_hei_name = c.upper() + 'H3'
-        self.a_bis_name = a.upper() + 'B1'
-        self.b_bis_name = b.upper() + 'B2'
-        self.c_bis_name = c.upper() + 'B3'
+        self.a_med_name = a.upper() + a.upper() + '1'
+        self.b_med_name = b.upper() + b.upper() + '1'
+        self.c_med_name = c.upper() + c.upper() + '1'
+        self.a_hei_name = a.upper() + a.upper() + '2'
+        self.b_hei_name = b.upper() + b.upper() + '2'
+        self.c_hei_name = c.upper() + c.upper() + '2'
+        self.a_bis_name = a.upper() + a.upper() + '3'
+        self.b_bis_name = b.upper() + b.upper() + '3'
+        self.c_bis_name = c.upper() + c.upper() + '3'
 
         self.between = False
         self.near = False
@@ -531,7 +531,7 @@ class Triangle_elems():
         
     def count(self):
         if not self.between and not self.near and not self.side_between and not self.side3 and not self.side_away:
-            print('Всё плохо')
+            # print('Всё плохо')
             self.error = True
         else:
             if not self.error3:
@@ -596,12 +596,12 @@ class Triangle_elems():
                 
 
             if not self.error2 and not self.error3:
-                print(self.ab_name, '=', self.ab)
-                print(self.ac_name, '=', self.ac)
-                print(self.bc_name, '=', self.bc)
-                print(self.alpha_name, '=', self.alpha)
-                print(self.beta_name, '=', self.beta)
-                print(self.gamma_name, '=', self.gamma)
+                # print(self.ab_name, '=', self.ab)
+                # print(self.ac_name, '=', self.ac)
+                # print(self.bc_name, '=', self.bc)
+                # print(self.alpha_name, '=', self.alpha)
+                # print(self.beta_name, '=', self.beta)
+                # print(self.gamma_name, '=', self.gamma)
                 self.picture('test.jpg', 1024, 840)
             
                 
